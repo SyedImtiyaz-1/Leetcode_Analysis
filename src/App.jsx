@@ -8,8 +8,10 @@ function App() {
   const [username, setUsername] = useState('');
   const [stats, setStats] = useState(null);
   const [analysis, setAnalysis] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const searchAnalysis = async () => {
+    setLoading(true);
     try {
       const res = await axios.get(`https://leetcode-api-faisalshohag.vercel.app/${username}`); // public API
       const data = res.data;
@@ -38,6 +40,8 @@ function App() {
       console.error('Error:', err);
       setStats(null);
       setAnalysis('❌ User not found!');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -67,6 +71,10 @@ function App() {
             Search <FontAwesomeIcon icon={faSearch} className="ml-2" />
           </button>
         </div>
+
+        {loading && (
+          <div className="spinner w-12 h-12 border-4 border-t-4 border-yellow-400 border-solid rounded-full animate-spin mx-auto mt-10" />
+        )}
 
         {stats && (
           <div className="mt-10 w-[90%] sm:w-full max-w-2xl bg-white text-black rounded-lg shadow-lg p-6">
