@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Axios Example</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+
+  <div class="cont">
+    <input id="input" type="text">
+    <button onclick="searchAnalysis()" id="btn">Search</button>
+    <p id="displayOutput"></p>
+    <p id="easy"></p>
+    <p id="med"></p>
+    <p id="hard"></p>
+  </div>
+
+  <script>
+
+    function searchAnalysis() {
+      const username = document.getElementById('input').value;
+      const output = document.getElementById('displayOutput');
+      const easy = document.getElementById('easy');
+      const medium = document.getElementById('med');
+      const hard = document.getElementById('hard');
+
+      axios.get(`https://leetcode-api-faisalshohag.vercel.app/${username}`)
+        .then(function (response) {
+          output.innerHTML = response.data.totalSolved;
+          const diff_easy = response.data.matchedUserStats.acSubmissionNum.find(item => item.difficulty === 'Easy');
+          const diff_med = response.data.matchedUserStats.acSubmissionNum.find(item => item.difficulty === 'Medium');
+          const diff_hard = response.data.matchedUserStats.acSubmissionNum.find(item => item.difficulty === 'Hard');
+          easy.innerHTML = `Total ${diff_easy.difficulty} Solved : ` + diff_easy.count;
+          medium.innerHTML = `Total ${diff_med.difficulty} Solved : ` + diff_med.count;
+          hard.innerHTML = `Total ${diff_hard.difficulty} Solved : ` + diff_hard.count;
+
+        })
+        .catch(function (error) {
+          console.error('Error fetching data:', error);
+        });
+    }
+
+  </script>
+
+</body>
+
+</html>
