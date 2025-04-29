@@ -61,7 +61,7 @@ function App() {
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            placeholder="Enter your Leetcode username"
+            placeholder="Enter your leetcode username"
             className="w-full sm:max-w-sm px-4 py-2 rounded-xl text-white border border-white focus:outline-none placeholder-white bg-gray-700"
           />
           <button
